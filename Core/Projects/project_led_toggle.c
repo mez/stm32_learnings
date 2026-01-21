@@ -14,15 +14,13 @@ void project_led_toggle(void)
   GPIOA->OTYPER &= ~GPIO_OTYPER_OT5; // Set PA5 to push-pull
 
   // output speed register Low speed
-  GPIOA->OSPEEDR &= ~GPIO_OSPEEDER_OSPEEDR5_0; // Clear speed bits
-  GPIOA->OSPEEDR &= ~GPIO_OSPEEDER_OSPEEDR5_1; // Clear speed bits
+  GPIOA->OSPEEDR &= ~(GPIO_OSPEEDER_OSPEEDR5_0|GPIO_OSPEEDER_OSPEEDR5_1); // Clear speed bits
 
   // pull-up/pull-down register
   GPIOA->PUPDR &= ~GPIO_PUPDR_PUPD5_0; // No pull-up, no pull-down
   GPIOA->PUPDR &= ~GPIO_PUPDR_PUPD5_1;
 
   // lets turn on the LED
-  
   while (1)
   {
     HAL_Delay(1000);

@@ -5,4 +5,4 @@ Slowly making my way through learning STM32 Microcontroller Programming. I am fo
 
 ## Codebase Structure 
 I didn't want to recreate a new codebase for every project. The main.c acts as a harness that hosts the different projects.
-`projects.h` has a flag you can set to decide the project that is run at compile time.
+`Core/Inc/projects.h` has a flag called `ACTIVE_PROJECT` you can set to decide the project that is run at compile time.

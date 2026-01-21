@@ -8,7 +8,7 @@
 #define PROJECT_BUTTON_LED 2
 
 // set this to one of the above project defines and it will run that project.
-#define ACTIVE_PROJECT PROJECT_LED_TOGGLE
+#define ACTIVE_PROJECT PROJECT_BUTTON_LED
 
 /**
     Project 1: Hello World aka LED Toggle
