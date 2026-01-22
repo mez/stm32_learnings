@@ -28,14 +28,45 @@ void project_button_led() {
     //we set to 00 for no pull-up pull-down since the board already has a pull-up resistor.
     GPIOC->PUPDR &= ~GPIO_PUPDR_PUPD13; 
 
+    // variables for debouncing.
+    volatile char buttonPressed = 0;
+    volatile int buttonPressedConfidenceLevel = 0;
+    volatile int buttonReleasedConfidenceLevel = 0;
+    volatile const int confidenceThreshold = 500;
+    volatile char ledState = 0;
+
     while (1) {
         // read button state by using the IDR register (input data register)
         if ( !(GPIOC->IDR & GPIO_IDR_ID13) ) {
+
+            if (buttonPressed == 0) {
+                if (buttonPressedConfidenceLevel >= confidenceThreshold) {
+                    if (ledState == 0) {
+                        ledState = 1;
+                        GPIOA->BSRR = GPIO_BSRR_BS5; // turn on led
+                    } else {
+                        ledState = 0;
+                        GPIOA->BSRR = GPIO_BSRR_BR_5; // turn off led
+                    }
+                    buttonPressed = 1;
+                } else {
+                    buttonPressedConfidenceLevel++;
+                    buttonReleasedConfidenceLevel= 0;
+                }
+            }
             // button pressed, means it was reading LOW
-            GPIOA->BSRR = GPIO_BSRR_BS5; // turn on led
         } else {
-            // button not pressed
-            GPIOA->BSRR = GPIO_BSRR_BR_5; // turn off led
+            
+            if (buttonPressed == 1) {
+
+                if (buttonReleasedConfidenceLevel >= confidenceThreshold) {
+                    buttonPressed = 0;
+                } else {
+                    buttonReleasedConfidenceLevel++;
+                    buttonPressedConfidenceLevel=0;
+                }
+            }
+            // GPIOA->BSRR = GPIO_BSRR_BR_5; // turn off led
         }
     }
 }
