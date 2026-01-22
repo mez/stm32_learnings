@@ -25,15 +25,8 @@ void project_button_led() {
     //Mode register for input
     GPIOC->MODER &= ~GPIO_MODER_MODE13; // set PC13 to input mode
     
-    //Pull-up/pull-down register for pull-up
-    // *** This is still a bit confusing but from what I understand, 
-    // because the board scehematic shows the button wired to ground,
-    // the default state is high and when pressed it goes to low. 
-    // So we need a pull-up resistor to ensure it reads high when not pressed.
-
-    //we set to 01 for pull-up
-    GPIOC->PUPDR |= GPIO_PUPDR_PUPD13_0; 
-    GPIOC->PUPDR &= ~GPIO_PUPDR_PUPD13_1; 
+    //we set to 00 for no pull-up pull-down since the board already has a pull-up resistor.
+    GPIOC->PUPDR &= ~GPIO_PUPDR_PUPD13; 
 
     while (1) {
         // read button state by using the IDR register (input data register)
