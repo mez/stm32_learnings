@@ -150,6 +150,11 @@ void send_instruction_to_LCD(char character) {
     send_byte_to_LCD(character);
 }
 
+void send_text_to_LCD(const char* text) {
+    while (*text) {
+        send_character_to_LCD(*text++);
+    }
+}
 
 
 void project_lcd() {
@@ -167,18 +172,7 @@ void project_lcd() {
     send_instruction_to_LCD(LCD_CLEAR_DISPLAY);
 
 
-   
-    send_character_to_LCD('H');
-    send_character_to_LCD('E');
-    send_character_to_LCD('L');
-    send_character_to_LCD('L');
-    send_character_to_LCD('O');
-    send_character_to_LCD(' ');
-    send_character_to_LCD('W');
-    send_character_to_LCD('O');
-    send_character_to_LCD('R');
-    send_character_to_LCD('L');
-    send_character_to_LCD('D');
+   send_text_to_LCD("Hello World!");
    
         
     while (1) {
