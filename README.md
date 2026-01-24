@@ -10,7 +10,7 @@ I didn't want to recreate a new codebase for every project. The main.c acts as a
 ## Board Spec Info
 
 I am using the [NUCLEO-F446RE
-](https://www.st.com/en/evaluation-tools/nucleo-f446re.html) below are the reference manual and schematics for your convinences!
+](https://www.st.com/en/evaluation-tools/nucleo-f446re.html) below are the reference manual and schematics for your convenience!
 
 * [Reference Manual](https://www.st.com/resource/en/reference_manual/rm0390-stm32f446xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
 

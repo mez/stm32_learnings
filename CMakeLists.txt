@@ -47,6 +47,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     ${CMAKE_SOURCE_DIR}/Core/Projects/project_led_toggle.c
     ${CMAKE_SOURCE_DIR}/Core/Projects/project_button_led.c
+    ${CMAKE_SOURCE_DIR}/Core/Projects/project_lcd.c
 )
 
 # Add include paths

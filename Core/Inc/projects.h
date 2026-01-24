@@ -6,9 +6,10 @@
 
 #define PROJECT_LED_TOGGLE 1
 #define PROJECT_BUTTON_LED 2
+#define PROJECT_LCD 3
 
 // set this to one of the above project defines and it will run that project.
-#define ACTIVE_PROJECT PROJECT_BUTTON_LED
+#define ACTIVE_PROJECT PROJECT_LCD
 
 /**
     Project 1: Hello World aka LED Toggle
@@ -22,12 +23,19 @@ void project_led_toggle(void);
 */
 void project_button_led(void);
 
+/**
+    Project 3: LCD Display
+    The goal is to initialize and display something on an LCD.
+*/
+void project_lcd(void);
 
 static inline void run_active_project(void) {
 #if ACTIVE_PROJECT == PROJECT_LED_TOGGLE
     project_led_toggle();
 #elif ACTIVE_PROJECT == PROJECT_BUTTON_LED
     project_button_led();
+#elif ACTIVE_PROJECT == PROJECT_LCD
+    project_lcd();
 #else
     #error "No valid project selected"
 #endif

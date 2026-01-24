@@ -8,16 +8,16 @@ void project_button_led() {
 
     // setup control register for led output on my board its PA5
     // Mode register
-    GPIOA->MODER |= GPIO_MODER_MODE5_0; // set PA5 to output mode
-    GPIOA->MODER &= ~GPIO_MODER_MODE5_1;
+    GPIOA->MODER |= GPIO_MODER_MODE0_0; // set PA5 to output mode
+    GPIOA->MODER &= ~GPIO_MODER_MODE0_1;
 
     // Output type register
-    GPIOA->OTYPER &= ~GPIO_OTYPER_OT5; // set PA5 to push-pull
+    GPIOA->OTYPER &= ~GPIO_OTYPER_OT0; // set PA5 to push-pull
    
     // Output speed register Low speed since its an led.
-    GPIOA->OSPEEDR &= ~GPIO_OSPEEDER_OSPEEDR5; // Clear speed bits
+    GPIOA->OSPEEDR &= ~GPIO_OSPEEDER_OSPEEDR0; // Clear speed bits
     // Pull-up/pull-down register
-    GPIOA->PUPDR &= ~GPIO_PUPDR_PUPD5; // No pull-up, no pull-down
+    GPIOA->PUPDR &= ~GPIO_PUPDR_PUPD0; // No pull-up, no pull-down
 
 
 
@@ -43,10 +43,10 @@ void project_button_led() {
                 if (buttonPressedConfidenceLevel >= confidenceThreshold) {
                     if (ledState == 0) {
                         ledState = 1;
-                        GPIOA->BSRR = GPIO_BSRR_BS5; // turn on led
+                        GPIOA->BSRR = GPIO_BSRR_BS0; // turn on led
                     } else {
                         ledState = 0;
-                        GPIOA->BSRR = GPIO_BSRR_BR_5; // turn off led
+                        GPIOA->BSRR = GPIO_BSRR_BR_0; // turn off led
                     }
                     buttonPressed = 1;
                 } else {
@@ -66,7 +66,7 @@ void project_button_led() {
                     buttonPressedConfidenceLevel=0;
                 }
             }
-            // GPIOA->BSRR = GPIO_BSRR_BR_5; // turn off led
+            // GPIOA->BSRR = GPIO_BSRR_BR_0; // turn off led
         }
     }
 }
