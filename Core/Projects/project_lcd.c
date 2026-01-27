@@ -6,7 +6,7 @@ void project_lcd() {
     initialize_LCD_pins();
     initialize_LCD_display();
 
-    send_text_to_LCD("Hello LCDio.h!");
+    send_text_to_LCD("Hello World!");
         
     while (1) {
         // Main loop

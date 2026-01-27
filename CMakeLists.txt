@@ -48,6 +48,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/Core/Projects/project_led_toggle.c
     ${CMAKE_SOURCE_DIR}/Core/Projects/project_button_led.c
     ${CMAKE_SOURCE_DIR}/Core/Projects/project_lcd.c
+    ${CMAKE_SOURCE_DIR}/Core/Projects/project_adc.c
 )
 
 # Add include paths
@@ -70,3 +71,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
     # Add user defined libraries
 )
+
+# Enable float support for printf/sprintf
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE -u _printf_float)

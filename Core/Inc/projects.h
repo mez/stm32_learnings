@@ -7,9 +7,10 @@
 #define PROJECT_LED_TOGGLE 1
 #define PROJECT_BUTTON_LED 2
 #define PROJECT_LCD 3
+#define PROJECT_ADC 4
 
 // set this to one of the above project defines and it will run that project.
-#define ACTIVE_PROJECT PROJECT_LCD
+#define ACTIVE_PROJECT PROJECT_ADC
 
 /**
     Project 1: Hello World aka LED Toggle
@@ -29,6 +30,12 @@ void project_button_led(void);
 */
 void project_lcd(void);
 
+/**
+    Project 4: ADC Tutorial
+    The goal is to read the internal temperature sensor using the ADC.
+*/
+void project_adc(void);
+
 static inline void run_active_project(void) {
 #if ACTIVE_PROJECT == PROJECT_LED_TOGGLE
     project_led_toggle();
@@ -36,6 +43,8 @@ static inline void run_active_project(void) {
     project_button_led();
 #elif ACTIVE_PROJECT == PROJECT_LCD
     project_lcd();
+#elif ACTIVE_PROJECT == PROJECT_ADC
+    project_adc();  
 #else
     #error "No valid project selected"
 #endif

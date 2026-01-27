@@ -53,7 +53,7 @@
 #define LCD_SET_DDRAM_ADDRESS 0b10000000
 
 // based on the bit state set the corresponding GPIO pin
-void send_bit_to_GPIO(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t bitState) {
+static inline void send_bit_to_GPIO(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t bitState) {
     if (bitState) {
         HAL_GPIO_WritePin(GPIOx, GPIO_Pin, GPIO_PIN_SET);
     } else {
@@ -62,7 +62,7 @@ void send_bit_to_GPIO(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t bitState) 
 }
 
 //send the bits of a character to the corresponding GPIO pins using the defined mapping
-void send_byte_to_LCD(char character) {
+static inline void send_byte_to_LCD(char character) {
     send_bit_to_GPIO(LCDD0_PORT, LCDD0_PIN, character & 0b00000001);
     send_bit_to_GPIO(LCDD1_PORT, LCDD1_PIN, character & 0b00000010);
     send_bit_to_GPIO(LCDD2_PORT, LCDD2_PIN, character & 0b00000100);
@@ -79,34 +79,34 @@ void send_byte_to_LCD(char character) {
     HAL_GPIO_WritePin(LCDEnable_PORT, LCDEnable_PIN, GPIO_PIN_RESET);
 }
 
-void enable_LCD() {
+static inline void enable_LCD() {
  HAL_GPIO_WritePin(LCDEnable_PORT, LCDEnable_PIN, GPIO_PIN_SET);
  HAL_Delay(1);
 }
 
-void disable_LCD() {
+static inline void disable_LCD() {
  HAL_GPIO_WritePin(LCDEnable_PORT, LCDEnable_PIN, GPIO_PIN_RESET);
  HAL_Delay(1);
 }
 
-void set_LCD_to_write_mode() {
+static inline void set_LCD_to_write_mode() {
  HAL_GPIO_WritePin(LCDReadWrite_PORT, LCDReadWrite_PIN, GPIO_PIN_RESET);
 }
 
-void set_LCD_to_read_mode() {
+static inline void set_LCD_to_read_mode() {
  HAL_GPIO_WritePin(LCDReadWrite_PORT, LCDReadWrite_PIN, GPIO_PIN_SET);
  enable_LCD();
 }
 
-void set_LCD_to_instruction_mode() {
+static inline void set_LCD_to_instruction_mode() {
  HAL_GPIO_WritePin(LCDRegisterSelect_PORT, LCDRegisterSelect_PIN, GPIO_PIN_RESET);
 }
 
-void set_LCD_to_character_mode() {
+static inline void set_LCD_to_character_mode() {
  HAL_GPIO_WritePin(LCDRegisterSelect_PORT, LCDRegisterSelect_PIN, GPIO_PIN_SET);
 }
 
-void config_port_and_pin_for_output(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin) {
+static inline void config_port_and_pin_for_output(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin) {
     // wow using the HAL is so much easier than direct register manipulation!!
     if (GPIOx == GPIOA) {
         __HAL_RCC_GPIOA_CLK_ENABLE();
@@ -134,27 +134,27 @@ void config_port_and_pin_for_output(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin) {
     HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 }
 
-void send_character_to_LCD(char character) {
+static inline void send_character_to_LCD(char character) {
     set_LCD_to_write_mode();
     set_LCD_to_character_mode();
     enable_LCD();
     send_byte_to_LCD(character);
 }
 
-void send_instruction_to_LCD(char character) {
+static inline void send_instruction_to_LCD(char character) {
     set_LCD_to_write_mode();
     set_LCD_to_instruction_mode();
     enable_LCD();
     send_byte_to_LCD(character);
 }
 
-void send_text_to_LCD(const char* text) {
+static inline void send_text_to_LCD(const char* text) {
     while (*text) {
         send_character_to_LCD(*text++);
     }
 }
 
-void initialize_LCD_pins() {
+static inline void initialize_LCD_pins() {
     // configure all LCD pins as output explicitly did not group pins by port for clarity.
     config_port_and_pin_for_output(LCDD0_PORT, LCDD0_PIN);
     config_port_and_pin_for_output(LCDD1_PORT, LCDD1_PIN);
@@ -169,7 +169,7 @@ void initialize_LCD_pins() {
     config_port_and_pin_for_output(LCDEnable_PORT, LCDEnable_PIN);
 }
 
-void initialize_LCD_display() {
+static inline void initialize_LCD_display() {
     send_instruction_to_LCD(LCD_FUNCTION_SET_8BIT_2LINE);
     send_instruction_to_LCD(LCD_DISPLAY_ON_CURSOR_ON);
     send_instruction_to_LCD(LCD_ENTRY_MODE_SET);
